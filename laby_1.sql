@@ -1,5 +1,7 @@
 USE Northwind;
 
+-- LAB 1 - 11.10.2021
+
 -- WYBÓR KOLUMN - ĆWICZENIA
 
 -- 1. Wybierz nazwy i adresy wszystkich klientów.
@@ -139,7 +141,7 @@ SELECT CompanyName, Country
 
 -- 1. Napisz polecenie, które oblicza wartość każdej pozycji zamówienia o numerze
 -- 10250.
-SELECT ProductID, (UnitPrice * (1 - Discount)) * Quantity AS TotalPrice
+SELECT ProductID, OrderID, (UnitPrice * (1 - Discount)) * Quantity AS TotalPrice
   FROM [Order Details]
   WHERE OrderID = 10250
 
@@ -148,3 +150,13 @@ SELECT ProductID, (UnitPrice * (1 - Discount)) * Quantity AS TotalPrice
 -- (numer telefonu i faksu mają być oddzielone przecinkiem).
 SELECT CompanyName, (Phone + ',' + Fax) AS ContactInfo
   FROM Suppliers
+  WHERE Phone IS NOT NULL
+    AND Fax IS NOT NULL
+
+-- Napisz instrukcję select tak aby wybrać numer zlecenia, datę zamówienia, numer
+-- klienta dla wszystkich niezrealizowanych jeszcze zleceń, dla których krajem
+-- odbiorcy jest Argentyna.
+SELECT OrderID, OrderDate, CustomerID
+  FROM Orders
+  WHERE ShipCountry = 'Argentina'
+    AND (ShippedDate IS NOT NULL OR ShippedDate > GETDATE())

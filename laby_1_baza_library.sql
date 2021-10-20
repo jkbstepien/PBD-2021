@@ -74,8 +74,8 @@ SELECT firstname + ', ' + middleinitial + ', ' + lastname AS email_name
   FROM member
   WHERE lastname LIKE 'Anderson'
 
-SELECT LOWER(firstname +
-             middleinitial +
+SELECT LOWER(REPLACE((firstname), ' ', '')+
+             REPLACE((middleinitial), ' ', '') +
              SUBSTRING(lastname, 1, 2) +
              '@library.com')
     AS example_email
@@ -96,7 +96,7 @@ SELECT LOWER(firstname +
 --     wartość kolumny title_no
 SELECT ('The title is: ' +
         title +
-        ' number ' +
+        ', title number ' +
         REPLACE(STR(title_no), ' ', ''))
     AS description
   FROM title
